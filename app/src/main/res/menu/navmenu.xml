@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/heatlh"
+        android:icon="@drawable/ic_baseline_health_and_safety_24"
+        android:title="Health" />
+    <item
+        android:id="@+id/Sports"
+        android:icon="@drawable/ic_baseline_sports_soccer_24"
+        android:title="Sports" />
+    <item
+        android:id="@+id/Business"
+        android:icon="@drawable/ic_baseline_business_24"
+        android:title="Business" />
+    <item
+        android:id="@+id/entertainment"
+        android:icon="@drawable/ic_baseline_videocam_24"
+        android:title="Entertainment" />
+    <item
+        android:id="@+id/Technology"
+        android:icon="@drawable/ic_baseline_android_24"
+        android:title="Technology" />
+    <item
+        android:id="@+id/Science"
+        android:icon="@drawable/ic_baseline_science_24"
+        android:title="Science" />
+
+</menu>

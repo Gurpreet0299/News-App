@@ -47,7 +47,6 @@ class NewsViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
             title.text=item.title
             author.text=item.author
             Glide.with(itemView.context).load(item.ImageUrl).into(imageView)
-
         }
     }
 }

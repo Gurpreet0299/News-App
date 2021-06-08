@@ -11,8 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+
         android:theme="@style/Theme.NewsApp">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.NewsApp.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,3 +26,6 @@
     </application>
 
 </manifest>
+
+    <!-- android:parentActivityName=".MainActivity"  it is used for enabling back button in fragments,navigation drawer-->
+    <!--android:theme="@style/Theme.NewsApp.NoActionBar" it is used for telling we are not using default toolbar-->

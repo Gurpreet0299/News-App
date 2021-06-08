@@ -1,68 +1,75 @@
 package com.example.newsapp
 
-import android.graphics.Color
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), NewsItemClicked {
+class MainActivity : AppCompatActivity() {
 
    lateinit var madapter :NewsListAdapter
+    lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
+        val toggle =ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close)
+        toggle.isDrawerIndicatorEnabled = true                         //it is used for showing up icon in the toolbar
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()                                             //it is telling if state is open or close
 
-        madapter= NewsListAdapter(this)
-        fetchData()
-        with(recyclerView){
-            layoutManager=LinearLayoutManager(this@MainActivity)
-            adapter=madapter
+        setUpTabs()
+        nav_view.setNavigationItemSelectedListener {
+
+            // Switch Fragments in a ViewPager on clicking items in Navigation Drawer
+            when(it.itemId){
+                R.id.heatlh ->{ viewPager.setCurrentItem(0)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+                }
+                R.id.Sports ->{ viewPager.setCurrentItem(1)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+
+                }
+                R.id.Business ->{viewPager.setCurrentItem(2)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+
+                }
+                R.id.Science ->{viewPager.setCurrentItem(3)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+
+                }
+                R.id.Technology ->{viewPager.setCurrentItem(4)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+
+                }
+                R.id.entertainment ->{viewPager.setCurrentItem(5)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+
+                }
+            }
+            true
         }
     }
-    fun fetchData(){
-        val url="https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
-// Request a string response from the provided URL.
-        val jsonObjectRequest =JsonObjectRequest(Request.Method.GET,
-            url,null,
-            Response.Listener {
-                Toast.makeText(this,"Loading...",Toast.LENGTH_LONG).show()
-            val newsJsonArray=it.getJSONArray("articles")
-                val newsArray=ArrayList<News>()
-                for(i in 0 until newsJsonArray.length()){
-                   val newsArrayObject=newsJsonArray.getJSONObject(i)
 
-                    //This is called parsing of data
-                   val news=News( newsArrayObject.getString("title"),
-                       newsArrayObject.getString("url"),
-                       newsArrayObject.getString("urlToImage"),
-                       newsArrayObject.getString("author")
-                       )
-                    newsArray.add(news)
 
-                    //adding data in adapter
-                    madapter.updatedNews(newsArray)
-                }
-            },
-            Response.ErrorListener {  Toast.makeText(this,"Error occured [${it.localizedMessage}] ",Toast.LENGTH_LONG).show()})
 
-// Add the request to the RequestQueue.
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+    fun setUpTabs(){
+
+        viewPagerAdapter=ViewPagerAdapter(supportFragmentManager)
+        viewPagerAdapter.addFragment(HealthFragment(),"Health")
+        viewPagerAdapter.addFragment(SportsFragment(),"Sports")
+        viewPagerAdapter.addFragment(BusinessFragment(),"Business")
+        viewPagerAdapter.addFragment(ScienceFragment(),"Science")
+        viewPagerAdapter.addFragment(TechnologyFragment(),"Technology")
+        viewPagerAdapter.addFragment(EntertainmentFragment(),"Entertainment")
+
+        viewPager.adapter=viewPagerAdapter
+
+        tabLayout.setupWithViewPager(viewPager)
     }
 
-    override fun onItemClicked(item: News) {
-       val builder = CustomTabsIntent.Builder();
-        val customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(this, Uri.parse(item.url));
-    }
 }
