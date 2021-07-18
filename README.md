@@ -3,7 +3,7 @@
 News app which gives a user news from the internet ,related to a particular topic.  
 It uses API to fetch information.  
 This is a well-maintained API which returns information in a JSON format.  
-Dialogflow is used to create chatbot.
+Dialogflow is used to create chatbot using webView.
 ## FEATURES 
 
 1.Navigation Drawer  
