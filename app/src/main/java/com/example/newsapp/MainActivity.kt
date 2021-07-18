@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import com.example.newsapp.adapter.NewsListAdapter
+import com.example.newsapp.adapter.ViewPagerAdapter
+import com.example.newsapp.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
-   lateinit var madapter :NewsListAdapter
+   lateinit var madapter : NewsListAdapter
     lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     fun setUpTabs(){
 
-        viewPagerAdapter=ViewPagerAdapter(supportFragmentManager)
+        viewPagerAdapter= ViewPagerAdapter(supportFragmentManager)
         viewPagerAdapter.addFragment(HealthFragment(),"Health")
         viewPagerAdapter.addFragment(SportsFragment(),"Sports")
         viewPagerAdapter.addFragment(BusinessFragment(),"Business")

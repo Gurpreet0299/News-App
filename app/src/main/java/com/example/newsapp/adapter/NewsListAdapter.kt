@@ -1,13 +1,15 @@
-package com.example.newsapp
+package com.example.newsapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.newsapp.News
+import com.example.newsapp.R
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class NewsListAdapter(private val listener :NewsItemClicked) : RecyclerView.Adapter<NewsViewHolder>() {
+class NewsListAdapter(private val listener : NewsItemClicked) : RecyclerView.Adapter<NewsViewHolder>() {
 
     val newsArray=ArrayList<News>()
 
@@ -42,7 +44,7 @@ class NewsListAdapter(private val listener :NewsItemClicked) : RecyclerView.Adap
     }
 }
 class NewsViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-    fun bind(item :News){
+    fun bind(item : News){
         with(itemView){
             title.text=item.title
             author.text=item.author
@@ -53,5 +55,5 @@ class NewsViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
 
 //This is callback we need to tell activity item has clicked in recyclerView
 interface NewsItemClicked{
-    fun onItemClicked(item :News)
+    fun onItemClicked(item : News)
 }

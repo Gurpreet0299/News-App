@@ -1,4 +1,4 @@
-package com.example.newsapp
+package com.example.newsapp.fragments
 
 import android.net.Uri
 import android.os.Bundle
@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.newsapp.*
+import com.example.newsapp.adapter.NewsItemClicked
+import com.example.newsapp.adapter.NewsListAdapter
 import kotlinx.android.synthetic.main.fragment_sports.*
 
 
-class SportsFragment : Fragment()  , NewsItemClicked{
-    lateinit var madapter :NewsListAdapter
-
+class SportsFragment : Fragment()  , NewsItemClicked {
+    lateinit var madapter : NewsListAdapter
+    lateinit var mfragment : FragmentClass
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,6 +36,7 @@ class SportsFragment : Fragment()  , NewsItemClicked{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         madapter= NewsListAdapter(this)
+        mfragment = FragmentClass()
         fetchData()
         with(recyclerView){
             layoutManager= LinearLayoutManager(context)
@@ -43,34 +47,7 @@ class SportsFragment : Fragment()  , NewsItemClicked{
 
     fun fetchData(){
         val url="https://saurav.tech/NewsAPI/top-headlines/category/sports/in.json"                   //health,sports,business
-// Request a string response from the provided URL.
-        val jsonObjectRequest = JsonObjectRequest(
-            Request.Method.GET,
-            url,null,
-            Response.Listener {
-                Toast.makeText(context,"Loading...", Toast.LENGTH_LONG).show()
-                val newsJsonArray=it.getJSONArray("articles")
-                val newsArray=ArrayList<News>()
-                for(i in 0 until newsJsonArray.length()){
-                    val newsArrayObject=newsJsonArray.getJSONObject(i)
-
-                    //This is called parsing of data
-                    val news=News( newsArrayObject.getString("title"),
-                        newsArrayObject.getString("url"),
-                        newsArrayObject.getString("urlToImage"),
-                        newsArrayObject.getString("author")
-                    )
-                    newsArray.add(news)
-
-                    //adding data in adapter
-                    madapter.updatedNews(newsArray)
-                }
-            },
-            Response.ErrorListener {  Toast.makeText(context,"Error occured [${it.localizedMessage}] ",
-                Toast.LENGTH_LONG).show()})
-
-// Add the request to the RequestQueue.
-        context?.let { MySingleton.getInstance(it).addToRequestQueue(jsonObjectRequest) }
+        context?.let { mfragment.fetchData(it,url,madapter) }
     }
     override fun onItemClicked(item: News) {
         val builder = CustomTabsIntent.Builder();
