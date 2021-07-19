@@ -1,8 +1,8 @@
 package com.example.newsapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.newsapp.adapter.NewsListAdapter
 import com.example.newsapp.adapter.ViewPagerAdapter
@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START,true);
 
                 }
+                R.id.Chatbot ->{viewPager.setCurrentItem(6)
+                    drawerLayout.closeDrawer(GravityCompat.START,true);
+                }
+
             }
             true
         }
@@ -69,10 +73,12 @@ class MainActivity : AppCompatActivity() {
         viewPagerAdapter.addFragment(ScienceFragment(),"Science")
         viewPagerAdapter.addFragment(TechnologyFragment(),"Technology")
         viewPagerAdapter.addFragment(EntertainmentFragment(),"Entertainment")
+        viewPagerAdapter.addFragment(ChatbotFragment(),"Chatbot")
 
         viewPager.adapter=viewPagerAdapter
 
         tabLayout.setupWithViewPager(viewPager)
     }
+
 
 }
